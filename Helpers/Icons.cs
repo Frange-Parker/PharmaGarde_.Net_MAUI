@@ -1,0 +1,63 @@
+namespace PharmaGarde.Helpers;
+
+// Chaque constante est le code Unicode d'une icône de la police Material Icons
+public static class Icons
+{
+    public const string Home = "\ue88a";          // maison
+    public const string List = "\ue241";          // liste à puces
+    public const string Map = "\ue55b";           // carte
+    public const string Person = "\ue7fd";        // personne
+    public const string PersonOutline = "\ue7ff"; // personne (contour)
+    public const string PersonAdd = "\ue7fe";     // ajout de personne
+    public const string NearMe = "\ue569";        // flèche de localisation
+    public const string Search = "\ue8b6";        // loupe
+    public const string Mic = "\ue029";           // micro
+    public const string Pin = "\ue0c8";           // repère de lieu
+    public const string Walk = "\ue536";          // marche
+    public const string Car = "\ue531";           // voiture
+    public const string Clock = "\ue8b5";         // horloge
+    public const string Calendar = "\ue935";      // calendrier
+    public const string Phone = "\ue0cd";         // téléphone
+    public const string Mail = "\ue0be";          // enveloppe
+    public const string Lock = "\ue897";          // cadenas
+    public const string Eye = "\ue8f4";           // œil ouvert
+    public const string EyeOff = "\ue8f5";        // œil barré
+    public const string Login = "\uea77";         // connexion
+    public const string Logout = "\ue9ba";        // déconnexion
+    public const string Shield = "\ue9e0";        // bouclier
+    public const string Security = "\ue32a";      // sécurité
+    public const string City = "\ue7f1";          // ville
+    public const string Explore = "\ue87a";       // boussole
+    public const string ExpandMore = "\ue5cf";    // flèche vers le bas
+    public const string ChevronRight = "\ue5cc";  // flèche droite
+    public const string ChevronLeft = "\ue5cb";   // flèche gauche
+    public const string Share = "\ue80d";         // partage
+    public const string Bookmark = "\ue866";      // favori plein
+    public const string BookmarkBorder = "\ue867";// favori contour
+    public const string Tune = "\ue429";          // filtres
+    public const string MyLocation = "\ue55c";    // me localiser
+    public const string Add = "\ue145";           // plus
+    public const string Remove = "\ue15b";        // moins
+    public const string Moon = "\ue51c";          // lune (nuit)
+    public const string Check = "\ue5ca";         // coche
+    public const string Accessible = "\ue914";    // accessibilité
+    public const string Info = "\ue88e";          // information
+    public const string Edit = "\ue3c9";          // crayon
+    public const string History = "\ue889";       // historique
+    public const string Bell = "\ue7f4";          // cloche
+    public const string Settings = "\ue8b8";      // engrenage
+    public const string Science = "\uea4b";       // éprouvette
+    public const string Smartphone = "\ue32c";    // smartphone
+    public const string Bolt = "\uea0b";          // éclair
+    public const string Water = "\ue798";         // goutte (perfusion)
+    public const string Air = "\uefd8";           // air (oxygène)
+    public const string Vaccines = "\ue138";      // seringue
+    public const string Star = "\ue838";          // étoile
+    public const string Folder = "\ue2c7";        // dossier (cache)
+    // nouvelles icônes pour les écrans "mot de passe oublié"
+    public const string LockReset = "\ueade";     // cadenas réinitialisé
+    public const string ArrowBack = "\ue5c4";     // flèche retour
+    public const string CheckCircle = "\ue86c";   // coche dans un cercle
+    public const string MarkEmailRead = "\uf18c"; // e-mail envoyé
+    public const string Key = "\ue73c";           // clé
+}

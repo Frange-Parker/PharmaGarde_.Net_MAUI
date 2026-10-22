@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- racine du manifeste : la ligne xmlns:android déclare le préfixe "android" utilisé plus bas -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- paramètres généraux de l'application (icône, sauvegarde, langues de droite à gauche) -->
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
+	<!-- autorise l'app à savoir si le téléphone a une connexion (détection hors-ligne) -->
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<!-- autorise l'accès à Internet -->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<!-- permet d'ouvrir l'application Téléphone (bouton "Appeler") sur Android 11 et plus -->
+	<queries>
+		<intent>
+			<action android:name="android.intent.action.DIAL" />
+			<data android:scheme="tel" />
+		</intent>
+	</queries>
+</manifest>

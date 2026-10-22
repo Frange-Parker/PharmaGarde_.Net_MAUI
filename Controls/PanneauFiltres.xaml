@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="PharmaGarde.Controls.PanneauFiltres"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:PharmaGarde.Controls"
+             IsVisible="False">
+    <!-- tout l'écran : 1/3 haut = fond sombre cliquable, 2/3 bas = panneau -->
+    <Grid RowDefinitions="*,2*" BackgroundColor="#B3000000">
+
+        <!-- zone sombre : un toucher ferme le panneau -->
+        <Grid BackgroundColor="Transparent">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnFermer" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <!-- le panneau -->
+        <Border Grid.Row="1" BackgroundColor="#141414" Stroke="Transparent" StrokeShape="RoundRectangle 24,24,0,0">
+            <Grid RowDefinitions="Auto,*,Auto">
+                <!-- poignée -->
+                <BoxView WidthRequest="40" HeightRequest="4" CornerRadius="2" Color="#444444"
+                         HorizontalOptions="Center" Margin="0,8,0,0" />
+
+                <!-- contenu défilant -->
+                <ScrollView Grid.Row="1">
+                    <VerticalStackLayout Padding="16,12" Spacing="12">
+
+                        <Label Text="RÉGIME &amp; DISPONIBILITÉ DE NUIT" Style="{StaticResource Rubrique}" />
+                        <Border Style="{StaticResource Card}" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="● Ouvert maintenant (Garde de Nuit)" FontAttributes="Bold" />
+                                    <Label Text="Accès immédiat sans appel préalable" Style="{StaticResource Caption}" />
+                                </VerticalStackLayout>
+                                <CheckBox x:Name="CbOuvert" Grid.Column="1" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="● Accès 24h/24 continu" FontAttributes="Bold" />
+                                    <Label Text="Officines avec rotation de garde sans interruption" Style="{StaticResource Caption}" />
+                                </VerticalStackLayout>
+                                <CheckBox x:Name="Cb24h" Grid.Column="1" />
+                            </Grid>
+                        </Border>
+
+                        <Label Text="SECTEUR DOUALA (WOURI)" Style="{StaticResource Rubrique}" Margin="0,8,0,0" />
+                        <!-- les puces de quartiers sont créées dans le code -->
+                        <FlexLayout x:Name="ZoneSecteurs" Wrap="Wrap" />
+
+                        <Label Text="SERVICES &amp; SOINS D'URGENCE" Style="{StaticResource Rubrique}" Margin="0,8,0,0" />
+                        <Border Style="{StaticResource Card}" Padding="12">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Test Rapide Paludisme (TDR)" FontAttributes="Bold" />
+                                    <Label Text="Dépistage immédiat sur place 24h" Style="{StaticResource Caption}" />
+                                </VerticalStackLayout>
+                                <CheckBox x:Name="CbTdr" Grid.Column="1" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Padding="12">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Mobile Money (OM &amp; MoMo)" FontAttributes="Bold" />
+                                    <Label Text="Règlement Orange Money &amp; MTN sans monnaie" Style="{StaticResource Caption}" />
+                                </VerticalStackLayout>
+                                <CheckBox x:Name="CbMm" Grid.Column="1" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Padding="12">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Oxygénothérapie d'urgence" FontAttributes="Bold" />
+                                    <Label Text="Bouteilles médicales et concentrateurs" Style="{StaticResource Caption}" />
+                                </VerticalStackLayout>
+                                <CheckBox x:Name="CbOxy" Grid.Column="1" />
+                            </Grid>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                            <Label Text="● RAYON DE RECHERCHE" Style="{StaticResource Rubrique}" />
+                            <Label x:Name="ValeurRayon" Grid.Column="1" Text="3 km" FontAttributes="Bold"
+                                   TextColor="{StaticResource VertAccent}" />
+                        </Grid>
+                        <!-- les 4 rayons sont créés dans le code -->
+                        <Grid x:Name="ZoneRayons" ColumnDefinitions="*,*,*,*" ColumnSpacing="8" />
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- bouton fixe en bas : ne chevauche jamais le contenu -->
+                <Border Grid.Row="2" BackgroundColor="#141414" Stroke="{StaticResource Bordure}" StrokeThickness="0.5" Padding="16,12">
+                    <c:IconButton Text="Appliquer les filtres" HeightRequest="52" Clicked="OnAppliquer" />
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

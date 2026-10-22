@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="PharmaGarde.Controls.IconButton"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!-- le fond arrondi du bouton (sa couleur est gérée dans le code) -->
+    <Border x:Name="Boite" StrokeThickness="0" StrokeShape="RoundRectangle 12" HeightRequest="48">
+        <!-- icône + texte centrés -->
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+            <Label x:Name="LabelIcone" FontFamily="Icons" FontSize="18" VerticalOptions="Center" />
+            <Label x:Name="LabelTexte" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+        <!-- détecte le toucher -->
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTape" />
+        </Border.GestureRecognizers>
+    </Border>
+</ContentView>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="PharmaGarde.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:v="clr-namespace:PharmaGarde.Views"
+       Shell.FlyoutBehavior="Disabled"
+       Shell.NavBarIsVisible="False"
+       Shell.TabBarIsVisible="False"
+       Shell.BackgroundColor="{StaticResource Fond}">
+
+    <!-- chaque page est un écran indépendant, la barre du bas est dessinée par BarreNav -->
+    <ShellContent Route="Splash" ContentTemplate="{DataTemplate v:SplashPage}" />
+    <ShellContent Route="Connexion" ContentTemplate="{DataTemplate v:ConnexionPage}" />
+    <ShellContent Route="Inscription" ContentTemplate="{DataTemplate v:InscriptionPage}" />
+    <ShellContent Route="Accueil" ContentTemplate="{DataTemplate v:AccueilPage}" />
+    <ShellContent Route="Liste" ContentTemplate="{DataTemplate v:ListePage}" />
+    <ShellContent Route="Carte" ContentTemplate="{DataTemplate v:CartePage}" />
+    <ShellContent Route="Profil" ContentTemplate="{DataTemplate v:ProfilPage}" />
+</Shell>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.AccueilPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+
+    <!-- UN SEUL enfant dans ContentPage : ce Grid (ligne 0 = contenu, ligne 1 = barre du bas) -->
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- ===== LIGNE 0 : contenu défilant ===== -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16,16" Spacing="14">
+
+                <!-- gros bouton de localisation -->
+                <c:IconButton Text="Trouver la garde autour de moi" Icon="{x:Static h:Icons.NearMe}"
+                              HeightRequest="52" Clicked="OnTrouverGarde" />
+
+                <!-- carte de recherche -->
+                <Border Style="{StaticResource Card}" Padding="12">
+                    <VerticalStackLayout Spacing="12">
+                        <!-- barre de recherche -->
+                        <Border Style="{StaticResource Field}" BackgroundColor="{StaticResource Zone}" HeightRequest="48">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Label Text="{x:Static h:Icons.Search}" Style="{StaticResource Icon}"
+                                       TextColor="{StaticResource TexteSec}" />
+                                <Entry Grid.Column="1" Placeholder="Rechercher une ville, un quartier..." />
+                                <Label Grid.Column="2" Text="{x:Static h:Icons.Mic}" Style="{StaticResource Icon}"
+                                       TextColor="{StaticResource TexteSec}" />
+                            </Grid>
+                        </Border>
+                        <!-- zone par défaut -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                            <Label Text="{x:Static h:Icons.Pin}" Style="{StaticResource Icon}" FontSize="18" />
+                            <Label Grid.Column="1" VerticalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Douala-Akwa" FontAttributes="Bold" />
+                                        <Span Text=" par défaut" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Column="2" Text="Changer"
+                                   TextColor="{StaticResource VertAccent}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- titre de section -->
+                <Label Text="Pharmacie la plus proche en service" FontAttributes="Bold" Margin="4,6,0,0" />
+
+                <!-- SQUELETTE (état de chargement) : visible pendant le chargement -->
+                <Border x:Name="Squelette" Style="{StaticResource Card}" IsVisible="False">
+                    <VerticalStackLayout Spacing="14">
+                        <Grid ColumnDefinitions="*,90" ColumnSpacing="30">
+                            <Border Style="{StaticResource Os}" HeightRequest="20" />
+                            <Border Grid.Column="1" Style="{StaticResource Os}" HeightRequest="24" />
+                        </Grid>
+                        <Border Style="{StaticResource Os}" WidthRequest="200" HorizontalOptions="Start" />
+                        <HorizontalStackLayout Spacing="10">
+                            <Border Style="{StaticResource Os}" WidthRequest="80" />
+                            <Border Style="{StaticResource Os}" WidthRequest="120" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <Border Style="{StaticResource Os}" HeightRequest="44" />
+                            <Border Grid.Column="1" Style="{StaticResource Os}" HeightRequest="44" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARTE RÉELLE de la pharmacie la plus proche -->
+                <Border x:Name="CartePharma" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <!-- nom + badge Ouverte -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="Pharmacie du Centre - Akwa" FontSize="18" FontAttributes="Bold"
+                                   VerticalOptions="Center" />
+                            <Border Grid.Column="1" Style="{StaticResource Badge}">
+                                <Label Text="● Ouverte" Style="{StaticResource BadgeTexte}" />
+                            </Border>
+                        </Grid>
+                        <!-- adresse -->
+                        <Label Text="Boulevard de la Liberté, Akwa, Douala" Style="{StaticResource Caption}"
+                               FontSize="13" Margin="0,-6,0,0" />
+                        <!-- distance et horaire -->
+                        <Border Style="{StaticResource Zone}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Label Text="{x:Static h:Icons.Walk}" Style="{StaticResource Icon}" />
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="550 m" FontSize="20" FontAttributes="Bold"
+                                           TextColor="{StaticResource VertAccent}" />
+                                    <Label Text="~7 min à pied" Style="{StaticResource Caption}" />
+                                </VerticalStackLayout>
+                                <HorizontalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                                    <Label Text="{x:Static h:Icons.Clock}" Style="{StaticResource Icon}"
+                                           TextColor="{StaticResource Texte}" FontSize="18" />
+                                    <Label Text="Permanence 24h" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                        <!-- boutons d'action -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <c:IconButton Text="Appeler" Icon="{x:Static h:Icons.Phone}" Variant="Secondary"
+                                          Clicked="OnAppeler" />
+                            <c:IconButton Grid.Column="1" Text="Itinéraire" Icon="{x:Static h:Icons.NearMe}"
+                                          Clicked="OnItineraire" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- services d'urgence -->
+                <Label Text="Services d'urgence nationaux" FontAttributes="Bold" Margin="4,6,0,0" />
+                <Border Style="{StaticResource Card}" Padding="16,14">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnUrgence" CommandParameter="119" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="12">
+                        <Ellipse WidthRequest="18" HeightRequest="18" Fill="{StaticResource Rouge}" VerticalOptions="Center" />
+                        <Label Text="119" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Erreur}" />
+                        <Label Text="SAMU" FontAttributes="Bold" TextColor="{StaticResource TexteSec}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" Padding="16,14">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnUrgence" CommandParameter="117" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="12">
+                        <Ellipse WidthRequest="18" HeightRequest="18" Fill="{StaticResource Rouge}" VerticalOptions="Center" />
+                        <Label Text="117" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Erreur}" />
+                        <Label Text="POLICE" FontAttributes="Bold" TextColor="{StaticResource TexteSec}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" Padding="16,14">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnUrgence" CommandParameter="118" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="12">
+                        <Ellipse WidthRequest="18" HeightRequest="18" Fill="{StaticResource Rouge}" VerticalOptions="Center" />
+                        <Label Text="118" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Erreur}" />
+                        <Label Text="POMPIERS" FontAttributes="Bold" TextColor="{StaticResource TexteSec}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== LIGNE 1 : barre de navigation du bas ===== -->
+        <c:BarreNav Grid.Row="1" Actif="Accueil" />
+    </Grid>
+</ContentPage>

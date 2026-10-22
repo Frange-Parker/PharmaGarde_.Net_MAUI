@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Color x:Key="Fond">#121212</Color>          <!-- fond des écrans -->
+    <Color x:Key="Carte">#1E1E1E</Color>         <!-- fond des cartes -->
+    <Color x:Key="Champ">#232323</Color>         <!-- fond des champs de saisie -->
+    <Color x:Key="Surface">#2A2A2A</Color>       <!-- boutons secondaires, puces -->
+    <Color x:Key="Zone">#161616</Color>          <!-- zones internes plus sombres -->
+    <Color x:Key="Bordure">#2A2A2A</Color>       <!-- bordures fines -->
+    <Color x:Key="Vert">#00C853</Color>          <!-- vert principal (boutons) -->
+    <Color x:Key="VertAccent">#3DDC6F</Color>    <!-- vert d'accent (textes, icônes) -->
+    <Color x:Key="VertFond">#1B3A26</Color>      <!-- fond des badges verts -->
+    <Color x:Key="SurTexteVert">#0B1F10</Color>  <!-- texte sombre sur fond vert -->
+    <Color x:Key="Texte">#EDEDED</Color>         <!-- texte principal -->
+    <Color x:Key="TexteSec">#B0B0B0</Color>      <!-- texte secondaire -->
+    <Color x:Key="TexteOff">#6B6B6B</Color>      <!-- texte désactivé -->
+    <Color x:Key="Erreur">#FF8A80</Color>        <!-- erreurs, urgences -->
+    <Color x:Key="ErreurFond">#3B1414</Color>    <!-- fond d'erreur -->
+    <Color x:Key="Rouge">#B71C1C</Color>         <!-- pastille rouge SOS -->
+    <Color x:Key="Ambre">#FFB74D</Color>         <!-- avertissement -->
+    <Color x:Key="Bleu">#7CC4FF</Color>          <!-- information -->
+</ResourceDictionary>
