@@ -138,11 +138,11 @@ Ces identifiants sont écrits dans le code : ils servent uniquement à la démon
 
 | Accueil | Liste | Carte |
 |---|---|---|
-| ![Accueil](docs/captures/accueil.png) | ![Liste](docs/captures/liste.png) | ![Carte](docs/captures/carte.png) |
+| ![Accueil](docs/captures/accueil.png) | ![Liste](docs/captures/liste.png) | ![Carte](docs/captures/carte.png) | ![Carte](docs/captures/reglages.png) |
 
-| Fiche pharmacie | Filtres | Espace pharmacien |
-|---|---|---|
-| ![Fiche](docs/captures/fiche.png) | ![Filtres](docs/captures/filtres.png) | ![Pharmacien](docs/captures/pharmacien.png) |
+| Filtres | Espace pharmacien |
+|---|---|
+| ![Fiche](docs/captures/filtres.png) | ![Pharmacien](docs/captures/pharmacien.png) |
 
 ---
 
