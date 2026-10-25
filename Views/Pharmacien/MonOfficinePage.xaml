@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.MonOfficinePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="12">
+
+                <Label Text="Mon officine" Style="{StaticResource H2}" FontSize="24" Margin="4,0,0,4" />
+
+                <c:ChampSaisie x:Name="Nom" Libelle="Nom de l'officine" Icone="{x:Static h:Icons.LocalPharmacy}" />
+                <c:ChampSaisie x:Name="Adresse" Libelle="Adresse" Icone="{x:Static h:Icons.Pin}" />
+                <c:ChampSaisie x:Name="Repere" Libelle="Repère" Icone="{x:Static h:Icons.Explore}" Placeholder="Ex: Face Ancien Cinéma" />
+                <c:ChampSaisie x:Name="Telephone" Libelle="Téléphone" Icone="{x:Static h:Icons.Phone}" Clavier="Telephone" />
+                <c:ChampChoix x:Name="Quartier" Libelle="Quartier" Icone="{x:Static h:Icons.Explore}" Choix="{x:Static h:Config.ChoixQuartiers}" />
+                <c:ChampSaisie x:Name="Horaires" Libelle="Horaires d'ouverture habituels" Icone="{x:Static h:Icons.Clock}" Placeholder="Ex: 08h30 - 20h00" />
+
+                <!-- position GPS -->
+                <c:IconButton Text="Utiliser ma position" Icon="{x:Static h:Icons.GpsFixed}" Variant="Secondary" Clicked="OnPosition" />
+                <Label x:Name="LblGps" Style="{StaticResource Caption}" />
+
+                <!-- services proposés -->
+                <Label Text="SERVICES PROPOSÉS" Style="{StaticResource Rubrique}" Margin="4,8,0,0" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Test rapide paludisme (TDR)" VerticalOptions="Center" /><Switch x:Name="SwTdr" Grid.Column="1" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Mobile Money (OM &amp; MoMo)" VerticalOptions="Center" /><Switch x:Name="SwMomo" Grid.Column="1" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Oxygénothérapie d'urgence" VerticalOptions="Center" /><Switch x:Name="SwOxy" Grid.Column="1" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Perfusion &amp; solutés d'urgence" VerticalOptions="Center" /><Switch x:Name="SwPerf" Grid.Column="1" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Sérum antitétanique &amp; premiers secours" VerticalOptions="Center" /><Switch x:Name="SwSerum" Grid.Column="1" /></Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <c:IconButton x:Name="BtnEnregistrer" Text="Enregistrer" Icon="{x:Static h:Icons.Check}" Margin="0,8,0,0" Clicked="OnEnregistrer" />
+                <Border Style="{StaticResource Card}" Padding="16">
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <Label Text="{x:Static h:Icons.Logout}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource Erreur}" />
+                        <Label Text="Déconnexion" FontAttributes="Bold" TextColor="{StaticResource Erreur}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnDeconnexion" /></Border.GestureRecognizers>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BarreNav Grid.Row="1" Mode="Pharmacien" Actif="MonOfficine" />
+    </Grid>
+</ContentPage>

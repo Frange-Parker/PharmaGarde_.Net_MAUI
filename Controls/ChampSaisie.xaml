@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="PharmaGarde.Controls.ChampSaisie"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <VerticalStackLayout Spacing="6">
+        <!-- libellé au-dessus du champ -->
+        <Label x:Name="LblLibelle" />
+        <!-- cadre du champ (rouge en cas d'erreur) -->
+        <Border x:Name="Cadre" Style="{StaticResource Field}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                <Label x:Name="LblIcone" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                <Entry x:Name="Saisie" Grid.Column="1" TextChanged="OnTexteModifie" />
+                <!-- œil pour afficher / masquer un mot de passe -->
+                <Label x:Name="LblOeil" Grid.Column="2" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" IsVisible="False">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnOeil" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Border>
+        <!-- message d'erreur sous le champ -->
+        <Label x:Name="LblMessage" FontSize="13" TextColor="{StaticResource Erreur}" IsVisible="False" />
+    </VerticalStackLayout>
+</ContentView>

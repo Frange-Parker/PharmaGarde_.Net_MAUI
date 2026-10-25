@@ -1,54 +1,60 @@
+using System.Globalization;
+using System.Text;
 using PharmaGarde.Models;
 
 namespace PharmaGarde.Helpers;
 
-// Mémoire des filtres, partagée entre la Liste et la Carte
 public static class EtatFiltres
 {
-    public static bool Applique;                         // faux tant que l'utilisateur n'a pas appuyé sur "Appliquer"
-    public static bool OuvertMaintenant = true;          // valeurs initiales = celles de la maquette
-    public static bool Acces24h;
-    public static HashSet<string> Quartiers = new() { "Akwa", "Bonanjo" };
-    public static bool Tdr = true;
-    public static bool MobileMoney = true;
-    public static bool Oxygene;
-    public static int RayonKm = 3;
-    private static bool _navEnCours; // vrai pendant qu'une navigation est en cours
+    public static bool Applique;                          // faux tant que "Appliquer" n'a pas été touché
+    public static bool OuvertMaintenant;                  // seulement les pharmacies de garde en ce moment
+    public static bool Acces24h;                          // seulement le service continu 24h/24
+    public static HashSet<string> Quartiers = new();      // quartiers cochés (vide = tous)
+    public static bool Tdr;                               // service exigé : test paludisme
+    public static bool MobileMoney;                       // service exigé : Mobile Money
+    public static bool Oxygene;                           // service exigé : oxygénothérapie
+    public static int RayonKm = 10;                       // rayon de recherche
+    public static string Texte = "";                      // texte tapé dans la recherche de l'accueil
 
-    // identifie l'état actuel (sert à savoir si la liste doit être recalculée)
+    // identifie l'état actuel (sert à savoir si l'affichage doit être recalculé)
     public static string Signature =>
-        $"{Applique}{OuvertMaintenant}{Acces24h}{string.Join(",", Quartiers.OrderBy(q => q))}{Tdr}{MobileMoney}{Oxygene}{RayonKm}";
+        $"{Applique}{OuvertMaintenant}{Acces24h}{string.Join(",", Quartiers.OrderBy(q => q))}{Tdr}{MobileMoney}{Oxygene}{RayonKm}{Texte}";
 
-    // remet tous les filtres à zéro (aucune contrainte)
+    // remet tous les filtres à zéro
     public static void Reinitialiser()
     {
         Applique = false; OuvertMaintenant = false; Acces24h = false;
-        Quartiers.Clear(); Tdr = false; MobileMoney = false; Oxygene = false; RayonKm = 10;
+        Quartiers.Clear(); Tdr = false; MobileMoney = false; Oxygene = false; RayonKm = 10; Texte = "";
     }
 
-    // applique les filtres et trie par distance croissante (la plus proche d'abord)
-    public static List<Pharmacie> Filtrer(IEnumerable<Pharmacie> source)
+    // minuscules et sans accents, pour comparer des textes
+    private static string Normaliser(string s)
     {
-        var resultat = source.AsEnumerable();
-        if (Applique)
+        var sb = new StringBuilder(); // résultat
+        foreach (char c in s.Normalize(NormalizationForm.FormD)) // sépare lettres et accents
+            if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark) sb.Append(c); // garde les lettres
+        return sb.ToString().ToLowerInvariant();
+    }
+
+    // applique la recherche et les filtres, puis trie par distance croissante
+    public static List<PharmacieVue> Filtrer(IEnumerable<PharmacieVue> source)
+    {
+        var r = source; // départ : tout
+        if (!string.IsNullOrWhiteSpace(Texte)) // recherche libre
         {
-            resultat = resultat.Where(p => p.DistanceKm <= RayonKm);                         // dans le rayon
-            if (OuvertMaintenant) resultat = resultat.Where(p => p.OuvertMaintenant);        // ouverte
-            if (Acces24h) resultat = resultat.Where(p => p.Permanence24h);                   // 24h/24
-            if (Quartiers.Count > 0) resultat = resultat.Where(p => Quartiers.Contains(p.Quartier)); // quartiers
-            if (Tdr) resultat = resultat.Where(p => p.Tdr);                                  // services demandés
-            if (MobileMoney) resultat = resultat.Where(p => p.MobileMoney);
-            if (Oxygene) resultat = resultat.Where(p => p.Oxygene);
+            string t = Normaliser(Texte.Trim());
+            r = r.Where(p => Normaliser(p.Nom + " " + p.Quartier + " " + p.Pharmacie.Ville + " " + p.Adresse).Contains(t));
         }
-        return resultat.OrderBy(p => p.DistanceKm).ToList();
-    }
-
-    // navigation protégée : ignore les touchers répétés
-    public static async Task Aller(string route)
-    {
-        if (_navEnCours) return; // une navigation est déjà en cours
-        _navEnCours = true;      // on verrouille
-        try { await Shell.Current.GoToAsync(route); } // on navigue
-        finally { _navEnCours = false; }              // on déverrouille
+        if (Applique) // filtres du panneau
+        {
+            r = r.Where(p => p.DistanceKm <= RayonKm); // dans le rayon
+            if (OuvertMaintenant) r = r.Where(p => p.EstDeGarde);
+            if (Acces24h) r = r.Where(p => p.EstDeGarde && p.Permanence?.Type == TypePermanence.Continu24h);
+            if (Quartiers.Count > 0) r = r.Where(p => Quartiers.Contains(p.Quartier));
+            if (Tdr) r = r.Where(p => p.Pharmacie.Tdr);
+            if (MobileMoney) r = r.Where(p => p.Pharmacie.MobileMoney);
+            if (Oxygene) r = r.Where(p => p.Pharmacie.Oxygene);
+        }
+        return r.OrderBy(p => p.DistanceKm).ToList(); // la plus proche d'abord
     }
 }

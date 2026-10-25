@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.AdminPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- ===== EN-TÊTE ===== -->
+        <VerticalStackLayout Grid.Row="0" Padding="16,16,16,8" Spacing="12">
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Administration" Style="{StaticResource H2}" FontSize="24" />
+                    <Label Text="Vérification des comptes pharmaciens" Style="{StaticResource Caption}" FontSize="14" />
+                </VerticalStackLayout>
+                <!-- déconnexion -->
+                <Border Grid.Column="1" Style="{StaticResource Rond}">
+                    <Label Text="{x:Static h:Icons.Logout}" Style="{StaticResource Icon}" TextColor="{StaticResource Erreur}" />
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding DeconnexionCommand}" /></Border.GestureRecognizers>
+                </Border>
+            </Grid>
+
+            <!-- choix de la liste : le bouton vert est la liste affichée -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                <c:IconButton Text="{Binding TexteAttente}" Variant="{Binding VarianteAttente}" Command="{Binding FiltreAttenteCommand}" />
+                <c:IconButton Grid.Column="1" Text="{Binding TexteValides}" Variant="{Binding VarianteValides}" Command="{Binding FiltreValidesCommand}" />
+                <c:IconButton Grid.Column="2" Text="{Binding TexteAutres}" Variant="{Binding VarianteAutres}" Command="{Binding FiltreAutresCommand}" />
+            </Grid>
+
+            <Label Text="Vérifiez le numéro ONPC auprès de l'Ordre avant de valider un compte." Style="{StaticResource Caption}" />
+        </VerticalStackLayout>
+
+        <!-- ===== LISTE DES COMPTES ===== -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,4,16,16" Spacing="14">
+
+                <!-- une carte par compte -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Comptes}" Spacing="14">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}">
+                                <VerticalStackLayout Spacing="8">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label Text="{Binding NomOfficine}" Style="{StaticResource H2}" VerticalOptions="Center" />
+                                        <Border Grid.Column="1" Style="{StaticResource Badge}" BackgroundColor="{Binding BadgeFond}">
+                                            <Label Text="{Binding BadgeTexte}" Style="{StaticResource BadgeTexte}" TextColor="{Binding BadgeCouleur}" />
+                                        </Border>
+                                    </Grid>
+                                    <Label Text="{Binding Titulaire}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Onpc}" Style="{StaticResource Caption}" FontSize="13" />
+                                    <Label Text="{Binding Email}" Style="{StaticResource Caption}" FontSize="13" />
+                                    <Label Text="{Binding DateTexte}" Style="{StaticResource Caption}" FontSize="13" />
+                                    <!-- les deux actions possibles selon le statut -->
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,6,0,0">
+                                        <c:IconButton Text="{Binding Libelle1}" Icon="{Binding Icone1}" Variant="{Binding Variante1}" Command="{Binding Commande1}" />
+                                        <c:IconButton Grid.Column="1" Text="{Binding Libelle2}" Icon="{Binding Icone2}" Variant="{Binding Variante2}" Command="{Binding Commande2}" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <!-- état vide -->
+                <c:EtatVide IsVisible="{Binding Vide}" Icone="{x:Static h:Icons.VerifiedUser}" Titre="Aucun compte" Message="{Binding MessageVide}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

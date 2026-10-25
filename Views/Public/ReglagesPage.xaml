@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.ReglagesPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="12">
+
+                <Label Text="Réglages" Style="{StaticResource H2}" FontSize="24" Margin="4,0,0,4" />
+
+                <!-- PRÉFÉRENCES GÉOGRAPHIQUES -->
+                <Label Text="PRÉFÉRENCES GÉOGRAPHIQUES" Style="{StaticResource Rubrique}" Margin="4,0,0,0" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="14">
+                        <c:ChampChoix x:Name="ChoixZone" Libelle="Zone favorite par défaut" Icone="{x:Static h:Icons.Explore}"
+                                      Choix="{x:Static h:Config.ChoixQuartiers}" ValeurChangee="OnChoixZone" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Localisation GPS" VerticalOptions="Center" />
+                            <Switch x:Name="SwGps" Grid.Column="1" Toggled="OnBasculeOption" />
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Bordure}" />
+                        <!-- officine favorite -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Label Text="{x:Static h:Icons.Bookmark}" Style="{StaticResource Icon}" FontSize="18" />
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="OFFICINE FAVORITE" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource VertAccent}" CharacterSpacing="1" />
+                                <Label x:Name="LblFavori" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="{x:Static h:Icons.ChevronRight}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                            <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnOuvrirFavori" /></Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- SOBRIÉTÉ & PERFORMANCE + badge dynamique -->
+                <Grid ColumnDefinitions="*,Auto" Margin="4,8,0,0">
+                    <Label Text="SOBRIÉTÉ &amp; PERFORMANCE" Style="{StaticResource Rubrique}" VerticalOptions="Center" />
+                    <Border x:Name="BadgeEco" Grid.Column="1" Style="{StaticResource Badge}">
+                        <Label x:Name="TxtEco" Style="{StaticResource BadgeTexte}" />
+                    </Border>
+                </Grid>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="14">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Mode sombre OLED strict" FontAttributes="Bold" FontSize="15" />
+                                <Label Text="Zéro émission de pixel lumineux" Style="{StaticResource Caption}" />
+                            </VerticalStackLayout>
+                            <Switch x:Name="SwOled" Grid.Column="1" Toggled="OnBasculeOption" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Mémorisation hors-ligne des gardes" FontAttributes="Bold" FontSize="15" />
+                                <Label Text="Disponibilité sans réseau mobile" Style="{StaticResource Caption}" />
+                            </VerticalStackLayout>
+                            <Switch x:Name="SwCache" Grid.Column="1" Toggled="OnBasculeOption" />
+                        </Grid>
+                        <!-- vider le cache -->
+                        <Border Style="{StaticResource Zone}" Padding="14,12">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Label Text="{x:Static h:Icons.Folder}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource TexteSec}" />
+                                <Label Grid.Column="1" Text="Vider les fichiers en cache" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Border Grid.Column="2" BackgroundColor="#14222E" Stroke="#244257" StrokeShape="RoundRectangle 12" Padding="10,4">
+                                    <Label x:Name="TailleCache" FontSize="12" TextColor="{StaticResource Bleu}" />
+                                </Border>
+                            </Grid>
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnViderCache" /></Border.GestureRecognizers>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- HISTORIQUE -->
+                <Border Style="{StaticResource Card}" Padding="16,14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Label Text="{x:Static h:Icons.History}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource TexteSec}" />
+                        <Label Grid.Column="1" Text="Historique des officines consultées" VerticalOptions="Center" />
+                        <Label Grid.Column="2" Text="{x:Static h:Icons.ChevronRight}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                    </Grid>
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnHistorique" /></Border.GestureRecognizers>
+                </Border>
+
+                <!-- ASSISTANCE & LÉGAL -->
+                <Label Text="ASSISTANCE &amp; LÉGAL" Style="{StaticResource Rubrique}" Margin="4,8,0,0" />
+                <Border Style="{StaticResource Card}" Padding="14">
+                    <VerticalStackLayout Spacing="12">
+                        <!-- lien 1 : retour à l'accueil, où se trouvent les numéros d'urgence -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border BackgroundColor="#3B1414" StrokeShape="Ellipse" Stroke="Transparent" WidthRequest="44" HeightRequest="44">
+                                <Label Text="{x:Static h:Icons.Add}" Style="{StaticResource Icon}" TextColor="{StaticResource Erreur}" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="Urgences médicales Cameroun" FontAttributes="Bold" />
+                                <Label Text="SAMU 119 • Police 117 • Pompiers 118" Style="{StaticResource Caption}" FontSize="11" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="{x:Static h:Icons.ChevronRight}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                            <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnUrgences" /></Grid.GestureRecognizers>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Bordure}" />
+                        <!-- lien 2 : informations légales -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border BackgroundColor="{StaticResource Surface}" StrokeShape="Ellipse" Stroke="Transparent" WidthRequest="44" HeightRequest="44">
+                                <Label Text="{x:Static h:Icons.Check}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="Informations légales" FontAttributes="Bold" />
+                                <Label Text="Données, vie privée, écoconception" Style="{StaticResource Caption}" FontSize="11" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="{x:Static h:Icons.ChevronRight}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                            <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnLegal" /></Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ESPACE PHARMACIEN -->
+                <Border Style="{StaticResource Card}" Padding="14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border BackgroundColor="{StaticResource VertFond}" StrokeShape="Ellipse" Stroke="Transparent" WidthRequest="44" HeightRequest="44">
+                            <Label Text="{x:Static h:Icons.LocalPharmacy}" Style="{StaticResource Icon}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Espace pharmacien" FontAttributes="Bold" />
+                            <Label Text="Déclarez les permanences de votre officine" Style="{StaticResource Caption}" FontSize="11" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="{x:Static h:Icons.ChevronRight}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                    </Grid>
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnEspacePharmacien" /></Border.GestureRecognizers>
+                </Border>
+
+                <!-- OUTIL DE DÉMONSTRATION -->
+                <Border x:Name="BlocDemo" Style="{StaticResource Card}" Padding="16,14" IsVisible="False">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Label Text="{x:Static h:Icons.Refresh}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource Ambre}" />
+                        <Label Text="Réinitialiser les données de démonstration" TextColor="{StaticResource Ambre}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnReinitialiserDemo" /></Border.GestureRecognizers>
+                </Border>
+
+                <Label Text="PharmaGarde v3.0" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BarreNav Grid.Row="1" Mode="Public" Actif="Reglages" />
+    </Grid>
+</ContentPage>

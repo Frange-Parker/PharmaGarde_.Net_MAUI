@@ -1,6 +1,6 @@
 namespace PharmaGarde.Helpers;
 
-// Chaque constante est le code Unicode d'une icône de la police Material Icons
+// Chaque constante est le code Unicode d'une icône de la police Material Icons (Outlined)
 public static class Icons
 {
     public const string Home = "\ue88a";          // maison
@@ -46,7 +46,7 @@ public static class Icons
     public const string History = "\ue889";       // historique
     public const string Bell = "\ue7f4";          // cloche
     public const string Settings = "\ue8b8";      // engrenage
-    public const string Science = "\uea4b";       // éprouvette
+    public const string Science = "\uea4b";       // éprouvette (test)
     public const string Smartphone = "\ue32c";    // smartphone
     public const string Bolt = "\uea0b";          // éclair
     public const string Water = "\ue798";         // goutte (perfusion)
@@ -54,10 +54,22 @@ public static class Icons
     public const string Vaccines = "\ue138";      // seringue
     public const string Star = "\ue838";          // étoile
     public const string Folder = "\ue2c7";        // dossier (cache)
-    // nouvelles icônes pour les écrans "mot de passe oublié"
     public const string LockReset = "\ueade";     // cadenas réinitialisé
     public const string ArrowBack = "\ue5c4";     // flèche retour
-    public const string CheckCircle = "\ue86c";   // coche dans un cercle
+    public const string CheckCircle = "\ue86c";   // coche cerclée
     public const string MarkEmailRead = "\uf18c"; // e-mail envoyé
     public const string Key = "\ue73c";           // clé
+    public const string LocalPharmacy = "\ue550"; // pharmacie
+    public const string AddCircle = "\ue147";     // plus cerclé
+    public const string VerifiedUser = "\ue8e8";  // compte vérifié
+    public const string CloudOff = "\ue2c1";      // hors ligne
+    public const string Refresh = "\ue5d5";       // rafraîchir
+    public const string Close = "\ue5cd";         // croix
+    public const string Warning = "\ue002";       // alerte
+    public const string GpsFixed = "\ue1b3";      // position précise
+    public const string Delete = "\ue872";        // corbeille
+    public const string HealthAndSafety = "\ue1d5"; // santé
+    public const string Hourglass = "\ue88b";     // sablier (attente)
+    public const string Dashboard = "\ue871";     // tableau de bord
+    public const string EventNote = "\ue616";     // planning
 }

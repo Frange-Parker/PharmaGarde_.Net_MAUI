@@ -1,45 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ContentView x:Class="PharmaGarde.Controls.BarreNav"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:h="clr-namespace:PharmaGarde.Helpers">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <!-- fond de la barre + fin trait de séparation en haut -->
     <Grid RowDefinitions="1,Auto" BackgroundColor="#1A1A1A">
         <BoxView Color="{StaticResource Bordure}" HeightRequest="1" />
-        <!-- 4 colonnes égales : Accueil, Liste, Carte, Profil -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*" Padding="0,8,0,10">
-
-            <VerticalStackLayout Spacing="2">
-                <Label x:Name="IcoAccueil" Text="{x:Static h:Icons.Home}" Style="{StaticResource Icon}" FontSize="24" />
-                <Label x:Name="TxtAccueil" Text="Accueil" FontSize="11" HorizontalOptions="Center" />
-                <VerticalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnTape" CommandParameter="Accueil" />
-                </VerticalStackLayout.GestureRecognizers>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Column="1" Spacing="2">
-                <Label x:Name="IcoListe" Text="{x:Static h:Icons.List}" Style="{StaticResource Icon}" FontSize="24" />
-                <Label x:Name="TxtListe" Text="Liste" FontSize="11" HorizontalOptions="Center" />
-                <VerticalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnTape" CommandParameter="Liste" />
-                </VerticalStackLayout.GestureRecognizers>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Column="2" Spacing="2">
-                <Label x:Name="IcoCarte" Text="{x:Static h:Icons.Map}" Style="{StaticResource Icon}" FontSize="24" />
-                <Label x:Name="TxtCarte" Text="Carte" FontSize="11" HorizontalOptions="Center" />
-                <VerticalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnTape" CommandParameter="Carte" />
-                </VerticalStackLayout.GestureRecognizers>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Column="3" Spacing="2">
-                <Label x:Name="IcoProfil" Text="{x:Static h:Icons.PersonOutline}" Style="{StaticResource Icon}" FontSize="24" />
-                <Label x:Name="TxtProfil" Text="Profil" FontSize="11" HorizontalOptions="Center" />
-                <VerticalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnTape" CommandParameter="Profil" />
-                </VerticalStackLayout.GestureRecognizers>
-            </VerticalStackLayout>
-        </Grid>
+        <!-- les onglets sont ajoutés ici par le code -->
+        <Grid x:Name="Colonnes" Grid.Row="1" Padding="0,8,0,10" />
     </Grid>
 </ContentView>

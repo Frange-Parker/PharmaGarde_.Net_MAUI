@@ -4,50 +4,67 @@ namespace PharmaGarde.Controls;
 
 public partial class BarreNav : ContentView
 {
-    // propriété "Actif" utilisable en XAML : Actif="Liste" (nom de l'onglet à mettre en vert)
+    // propriété "Mode" : "Public" (4 onglets) ou "Pharmacien" (3 onglets)
+    public static readonly BindableProperty ModeProperty = BindableProperty.Create(
+        nameof(Mode), typeof(string), typeof(BarreNav), "Public",
+        propertyChanged: (b, o, n) => ((BarreNav)b).Planifier());
+
+    // propriété "Actif" : route de l'onglet à mettre en vert
     public static readonly BindableProperty ActifProperty = BindableProperty.Create(
         nameof(Actif), typeof(string), typeof(BarreNav), "",
-        propertyChanged: (b, o, n) => ((BarreNav)b).Actualiser()); // redessine quand la valeur change
+        propertyChanged: (b, o, n) => ((BarreNav)b).Planifier());
 
-    public string Actif
-    {
-        get => (string)GetValue(ActifProperty); // lit la valeur
-        set => SetValue(ActifProperty, value);  // écrit la valeur
-    }
+    public string Mode { get => (string)GetValue(ModeProperty); set => SetValue(ModeProperty, value); }
+    public string Actif { get => (string)GetValue(ActifProperty); set => SetValue(ActifProperty, value); }
+
+    private bool _planifie; // une construction est déjà en attente ?
 
     public BarreNav()
     {
         InitializeComponent(); // charge le XAML
-        Actualiser();          // applique les couleurs initiales
+        Planifier();           // demande une construction
     }
 
-    // colore l'onglet actif en vert et les autres en gris
-    private void Actualiser()
+    // regroupe les changements de Mode et d'Actif en UNE seule construction
+    private void Planifier()
     {
-        // (nom de l'onglet, son icône, son texte)
-        var onglets = new[]
-        {
-            ("Accueil", IcoAccueil, TxtAccueil),
-            ("Liste", IcoListe, TxtListe),
-            ("Carte", IcoCarte, TxtCarte),
-            ("Profil", IcoProfil, TxtProfil)
-        };
+        if (_planifie) return;   // déjà en attente
+        _planifie = true;
+        var d = Dispatcher;
+        if (d == null) { _planifie = false; Construire(); return; } // pas de dispatcher : on construit tout de suite
+        d.Dispatch(() => { _planifie = false; Construire(); });     // construit une fois que les propriétés sont posées
+    }
 
-        foreach (var (nom, icone, texte) in onglets)
+    // dessine les onglets selon le mode
+    private void Construire()
+    {
+        Colonnes.Children.Clear();          // retire les anciens onglets
+        Colonnes.ColumnDefinitions.Clear(); // retire les anciennes colonnes
+
+        // (route, libellé, icône) de chaque onglet
+        (string Route, string Libelle, string Icone)[] onglets = Mode == "Pharmacien"
+            ? new[] { ("Tableau", "Tableau", Icons.Dashboard), ("Planning", "Planning", Icons.EventNote), ("MonOfficine", "Officine", Icons.LocalPharmacy) }
+            : new[] { ("Accueil", "Accueil", Icons.Home), ("Liste", "Liste", Icons.List), ("Carte", "Carte", Icons.Map), ("Reglages", "Réglages", Icons.Settings) };
+
+        for (int i = 0; i < onglets.Length; i++)
         {
-            bool actif = nom == Actif; // est-ce l'onglet courant ?
+            var (route, libelle, icone) = onglets[i];
+            bool actif = route == Actif; // onglet courant ?
             var couleur = Color.FromArgb(actif ? "#3DDC6F" : "#B0B0B0"); // vert ou gris
-            icone.TextColor = couleur; // couleur de l'icône
-            texte.TextColor = couleur; // couleur du libellé
-            texte.FontAttributes = actif ? FontAttributes.Bold : FontAttributes.None; // gras si actif
-        }
-    }
 
-    // toucher sur un onglet : on va à la page correspondante
-    private async void OnTape(object? sender, TappedEventArgs e)
-    {
-        string? cible = e.Parameter?.ToString(); // nom de la page
-        if (cible != null)
-            await Outils.Aller("//" + cible); // navigation protégée vers la page racine    
+            var pile = new VerticalStackLayout { Spacing = 2 }; // icône au-dessus du libellé
+            pile.Children.Add(new Label { Text = icone, FontFamily = "Icons", FontSize = 24, HorizontalOptions = LayoutOptions.Center, TextColor = couleur });
+            pile.Children.Add(new Label { Text = libelle, FontSize = 11, HorizontalOptions = LayoutOptions.Center, TextColor = couleur,
+                                          FontAttributes = actif ? FontAttributes.Bold : FontAttributes.None });
+
+            var toucher = new TapGestureRecognizer();
+            string cible = route; // copie locale pour la fonction ci-dessous
+            toucher.Tapped += async (s, e) => await Outils.Aller("//" + cible); // va à la page correspondante
+            pile.GestureRecognizers.Add(toucher);
+
+            Colonnes.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star)); // une colonne par onglet
+            Grid.SetColumn(pile, i);
+            Colonnes.Children.Add(pile);
+        }
     }
 }

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.DetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="NotAnimated">
+
+    <!-- 3 lignes : barre du haut / contenu défilant / boutons du bas -->
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- ===== LIGNE 0 : Retour, partager, favori ===== -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Padding="16,12">
+            <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                <Label Text="{x:Static h:Icons.ChevronLeft}" Style="{StaticResource Icon}" />
+                <Label Text="Retour" TextColor="{StaticResource VertAccent}" VerticalOptions="Center" />
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRetour" />
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+            <Border Grid.Column="1" Style="{StaticResource Rond}" WidthRequest="40" HeightRequest="40">
+                <Label Text="{x:Static h:Icons.Share}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource Texte}" />
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnPartager" /></Border.GestureRecognizers>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource Rond}" WidthRequest="40" HeightRequest="40">
+                <Label x:Name="IcoFavori" Text="{x:Static h:Icons.BookmarkBorder}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource Texte}" />
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnFavori" /></Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+        <!-- ===== LIGNE 1 : contenu ===== -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,0,16,16" Spacing="14">
+
+                <!-- pastille de statut -->
+                <Border x:Name="Pastille" Style="{StaticResource Badge}" HorizontalOptions="Start">
+                    <Label x:Name="PastilleTexte" Style="{StaticResource BadgeTexte}" />
+                </Border>
+
+                <!-- nom -->
+                <Label x:Name="LblNom" Style="{StaticResource H1}" />
+
+                <!-- bloc "Aucune donnée" (visible seulement si la pharmacie n'a pas déclaré de permanence) -->
+                <Border x:Name="BlocAucune" IsVisible="False" BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}"
+                        StrokeShape="RoundRectangle 16" Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Aucune donnée sur cette pharmacie" FontAttributes="Bold" FontSize="16" />
+                        <Label Text="Cette officine n'a pas encore déclaré de permanence. Appelez-la pour confirmer son ouverture."
+                               Style="{StaticResource Caption}" FontSize="14" />
+                        <Label Text="Vous êtes le pharmacien ? Inscrivez votre officine" TextColor="{StaticResource VertAccent}" FontAttributes="Bold">
+                            <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnInscrireOfficine" /></Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- bloc localisation (vectoriel, sans image) -->
+                <Border BackgroundColor="#151A18" Stroke="{StaticResource Bordure}" StrokeShape="RoundRectangle 16" Padding="14" HeightRequest="110">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center">
+                        <Border WidthRequest="44" HeightRequest="44" StrokeShape="Ellipse" BackgroundColor="#1E2A22" Stroke="Transparent">
+                            <Label Text="{x:Static h:Icons.Pin}" Style="{StaticResource Icon}" FontSize="22" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label x:Name="LblRue" FontAttributes="Bold" />
+                            <Label x:Name="LblRepere" Style="{StaticResource Caption}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- horaires -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="{x:Static h:Icons.Clock}" Style="{StaticResource Icon}" />
+                            <Label Text="Horaires d'ouverture" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Lundi au Samedi" />
+                            <Label x:Name="LblHorairesJour" Grid.Column="1" FontAttributes="Bold" />
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Bordure}" />
+                        <Label x:Name="LblLibelleGarde" FontAttributes="Bold" TextColor="{StaticResource VertAccent}" />
+                        <Label x:Name="LblHorairesGarde" FontAttributes="Bold" TextColor="{StaticResource VertAccent}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- modalités de garde nocturne -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="{x:Static h:Icons.Security}" Style="{StaticResource Icon}" TextColor="{StaticResource Bleu}" />
+                            <Label Text="Modalités de garde nocturne" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Border Style="{StaticResource Zone}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                <Label Text="{x:Static h:Icons.Info}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource TexteSec}" VerticalOptions="Start" />
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Ordonnance obligatoire après minuit." FontAttributes="Bold" />
+                                    <Label x:Name="TexteModalite" Style="{StaticResource Caption}" FontSize="13" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- services d'urgence (lignes créées par le code) -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="{x:Static h:Icons.Add}" Style="{StaticResource Icon}" />
+                            <Label Text="Services d'urgence disponibles" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout x:Name="ListeServices" Spacing="10" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- équipe de permanence -->
+                <Border Style="{StaticResource Card}" Padding="12">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Stroke="Transparent" WidthRequest="52" HeightRequest="52">
+                            <Label Text="{x:Static h:Icons.PersonOutline}" Style="{StaticResource Icon}" FontSize="26" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="ÉQUIPE DE PERMANENCE" Style="{StaticResource Caption}" FontSize="11" CharacterSpacing="1" />
+                            <Label x:Name="LblEquipe" FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- fraîcheur de l'information (règle RG4) -->
+                <Border Style="{StaticResource Card}" Padding="14">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Label Text="{x:Static h:Icons.Info}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource Bleu}" VerticalOptions="Start" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label x:Name="LblFraicheur" FontAttributes="Bold" FontSize="13" />
+                            <Label Text="Appel de confirmation recommandé avant tout déplacement nocturne." Style="{StaticResource Caption}" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== LIGNE 2 : barre d'actions fixe ===== -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="16,12" BackgroundColor="#151515">
+            <c:IconButton Text="Appeler" Icon="{x:Static h:Icons.Phone}" Variant="Secondary" HeightRequest="52" Clicked="OnAppeler" />
+            <c:IconButton x:Name="BtnItineraire" Grid.Column="1" Text="Itinéraire" Icon="{x:Static h:Icons.NearMe}" HeightRequest="52" Clicked="OnItineraire" />
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- racine du manifeste : la ligne xmlns:android déclare le préfixe "android" utilisé plus bas -->
+<!-- racine du manifeste : la ligne xmlns:android déclare le préfixe "android" -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-	<!-- paramètres généraux de l'application (icône, sauvegarde, langues de droite à gauche) -->
+	<!-- paramètres généraux de l'application -->
 	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
-	<!-- autorise l'app à savoir si le téléphone a une connexion (détection hors-ligne) -->
+	<!-- savoir si le téléphone a une connexion (détection hors ligne) -->
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<!-- autorise l'accès à Internet -->
+	<!-- accès à Internet (pour la future API) -->
 	<uses-permission android:name="android.permission.INTERNET" />
+	<!-- position précise : pour trouver les pharmacies proches -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<!-- position approximative -->
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<!-- permet d'ouvrir l'application Téléphone (bouton "Appeler") sur Android 11 et plus -->
 	<queries>
 		<intent>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.CartePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+
+    <!-- Grid extérieur : ligne 0 = écran, ligne 1 = barre du bas -->
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- 3 lignes : barre du haut / carte / panneau du bas -->
+        <Grid Grid.Row="0" RowDefinitions="Auto,*,Auto">
+
+            <!-- ===== LIGNE 0 : bascule Liste / Carte + bouton filtres ===== -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,16,16,10">
+                <Border BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}" StrokeShape="RoundRectangle 22" Padding="4">
+                    <HorizontalStackLayout Spacing="4">
+                        <Border BackgroundColor="Transparent" Stroke="Transparent" Padding="14,8">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{x:Static h:Icons.List}" Style="{StaticResource Icon}" FontSize="16" TextColor="{StaticResource TexteSec}" />
+                                <Label Text="Liste" TextColor="{StaticResource TexteSec}" />
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnVueListe" /></Border.GestureRecognizers>
+                        </Border>
+                        <Border BackgroundColor="{StaticResource VertFond}" Stroke="Transparent" StrokeShape="RoundRectangle 18" Padding="14,8">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{x:Static h:Icons.Map}" Style="{StaticResource Icon}" FontSize="16" />
+                                <Label Text="Carte ●" FontAttributes="Bold" TextColor="{StaticResource VertAccent}" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </HorizontalStackLayout>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource Rond}">
+                    <Label Text="{x:Static h:Icons.Tune}" Style="{StaticResource Icon}" TextColor="{StaticResource Texte}" />
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnFiltres" /></Border.GestureRecognizers>
+                </Border>
+            </Grid>
+
+            <!-- ===== LIGNE 1 : la vraie carte (OpenStreetMap) ===== -->
+            <WebView x:Name="Web" Grid.Row="1" Navigating="OnNavigating" Navigated="OnNavigated" />
+            <Label x:Name="LblAucune" Grid.Row="1" Text="Aucune pharmacie à afficher avec ces filtres." IsVisible="False"
+                   TextColor="{StaticResource TexteSec}" HorizontalOptions="Center" VerticalOptions="End" Margin="24,0,24,16"
+                   HorizontalTextAlignment="Center" />
+
+            <!-- ===== LIGNE 2 : panneau de la pharmacie sélectionnée (son BindingContext est une PharmacieVue) ===== -->
+            <Border x:Name="PanneauBas" Grid.Row="2" BackgroundColor="{StaticResource Carte}" Stroke="Transparent"
+                    StrokeShape="RoundRectangle 24,24,0,0" Padding="16,8,16,16">
+                <VerticalStackLayout Spacing="12">
+                    <BoxView WidthRequest="40" HeightRequest="4" CornerRadius="2" Color="#444444" HorizontalOptions="Center" />
+                    <!-- nom + badge -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Text="{Binding Nom}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Border Grid.Column="1" Style="{StaticResource Badge}" BackgroundColor="{Binding BadgeFond}">
+                            <Label Text="{Binding BadgeTexte}" Style="{StaticResource BadgeTexte}" TextColor="{Binding BadgeCouleur}" />
+                        </Border>
+                    </Grid>
+                    <!-- adresse -->
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="{x:Static h:Icons.Pin}" Style="{StaticResource Icon}" FontSize="16" TextColor="{StaticResource TexteSec}" />
+                        <Label Text="{Binding Adresse}" TextColor="{StaticResource TexteSec}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <!-- temps de trajet -->
+                    <Border Style="{StaticResource Zone}" Padding="10">
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <HorizontalStackLayout Spacing="10">
+                                <Border BackgroundColor="#1E2A22" StrokeShape="RoundRectangle 8" Stroke="Transparent" WidthRequest="40" HeightRequest="40">
+                                    <Label Text="{x:Static h:Icons.Car}" Style="{StaticResource Icon}" FontSize="18" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="En taxi / voiture" Style="{StaticResource Caption}" FontSize="11" />
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Label Text="{Binding TempsVoiture}" FontAttributes="Bold" FontSize="13" />
+                                        <Label Text="{Binding DistanceTexte, StringFormat='({0})'}" TextColor="{StaticResource TexteSec}" FontSize="13" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                                <Border BackgroundColor="#1E2630" StrokeShape="RoundRectangle 8" Stroke="Transparent" WidthRequest="40" HeightRequest="40">
+                                    <Label Text="{x:Static h:Icons.Walk}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource Bleu}" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="À pied" Style="{StaticResource Caption}" FontSize="11" />
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Label Text="{Binding TempsPiedCourt}" FontAttributes="Bold" FontSize="13" />
+                                        <Label Text="{Binding DistanceTexte, StringFormat='({0})'}" TextColor="{StaticResource TexteSec}" FontSize="13" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                    <!-- boutons : téléphone + itinéraire -->
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <c:IconButton Icon="{x:Static h:Icons.Phone}" Variant="Secondary" WidthRequest="52" Clicked="OnAppeler" />
+                        <c:IconButton Grid.Column="1" Text="Itinéraire" Icon="{x:Static h:Icons.NearMe}" Clicked="OnItineraire" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ===== ÉTAT D'ERREUR : recouvre la carte et le panneau ===== -->
+            <Grid x:Name="Erreur" Grid.Row="1" Grid.RowSpan="2" IsVisible="False" BackgroundColor="{DynamicResource Fond}">
+                <c:EtatVide x:Name="ErreurVue" Icone="{x:Static h:Icons.CloudOff}" Titre="Impossible de charger la carte"
+                            Message="La carte a besoin d'Internet. Vérifier votre connexion puis réessayer."
+                            TexteBouton="Réessayer" IconeBouton="{x:Static h:Icons.Refresh}" VarianteBouton="Secondary"
+                            TexteLien="Voir la liste hors ligne" BoutonClique="OnReessayer" LienClique="OnListeHorsLigne" />
+            </Grid>
+        </Grid>
+
+        <!-- barre de navigation du bas -->
+        <c:BarreNav Grid.Row="1" Mode="Public" Actif="Carte" />
+
+        <!-- couche des filtres : couvre toute la page, barre du bas comprise -->
+        <c:PanneauFiltres x:Name="Panneau" Grid.Row="0" Grid.RowSpan="2" Appliquer="OnFiltresAppliques" />
+    </Grid>
+</ContentPage>

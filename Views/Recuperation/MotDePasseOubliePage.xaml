@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.MotDePasseOubliePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="NotAnimated">
+    <ScrollView>
+        <VerticalStackLayout Padding="24,16" Spacing="10">
+            <HorizontalStackLayout Spacing="4">
+                <Label Text="{x:Static h:Icons.ChevronLeft}" Style="{StaticResource Icon}" />
+                <Label Text="Retour" TextColor="{StaticResource VertAccent}" VerticalOptions="Center" />
+                <HorizontalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnRetour" /></HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+
+            <Border WidthRequest="88" HeightRequest="88" BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}"
+                    StrokeShape="RoundRectangle 24" HorizontalOptions="Center" Margin="0,32,0,16">
+                <Label Text="{x:Static h:Icons.LockReset}" Style="{StaticResource Icon}" FontSize="44" />
+            </Border>
+            <Label Text="Mot de passe oublié" Style="{StaticResource H1}" HorizontalOptions="Center" />
+            <Label Text="Saisissez l'adresse e-mail de votre compte. Nous vous enverrons un code de vérification."
+                   Style="{StaticResource Caption}" FontSize="14" HorizontalTextAlignment="Center" Margin="0,0,0,20" />
+
+            <c:ChampSaisie x:Name="Email" Libelle="Adresse email" Icone="{x:Static h:Icons.Mail}" Placeholder="nom@exemple.fr"
+                           Clavier="Email" TexteModifie="OnChange" />
+            <c:IconButton x:Name="BtnEnvoyer" Text="Envoyer le code" Icon="{x:Static h:Icons.MarkEmailRead}" Margin="0,12,0,0" Clicked="OnEnvoyer" />
+
+            <Label Text="Retour à la connexion" TextColor="{StaticResource VertAccent}" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,16,0,0">
+                <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnRetour" /></Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

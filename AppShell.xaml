@@ -8,12 +8,18 @@
        Shell.TabBarIsVisible="False"
        Shell.BackgroundColor="{StaticResource Fond}">
 
-    <!-- chaque page est un écran indépendant, la barre du bas est dessinée par BarreNav -->
+    <!-- Chaque écran principal est une page racine : navigation par GoToAsync("//Route").
+         La barre du bas est dessinée par notre contrôle BarreNav, pas par le Shell. -->
     <ShellContent Route="Splash" ContentTemplate="{DataTemplate v:SplashPage}" />
-    <ShellContent Route="Connexion" ContentTemplate="{DataTemplate v:ConnexionPage}" />
-    <ShellContent Route="Inscription" ContentTemplate="{DataTemplate v:InscriptionPage}" />
     <ShellContent Route="Accueil" ContentTemplate="{DataTemplate v:AccueilPage}" />
     <ShellContent Route="Liste" ContentTemplate="{DataTemplate v:ListePage}" />
     <ShellContent Route="Carte" ContentTemplate="{DataTemplate v:CartePage}" />
-    <ShellContent Route="Profil" ContentTemplate="{DataTemplate v:ProfilPage}" />
+    <ShellContent Route="Reglages" ContentTemplate="{DataTemplate v:ReglagesPage}" />
+    <ShellContent Route="Connexion" ContentTemplate="{DataTemplate v:ConnexionPage}" />
+    <ShellContent Route="Inscription" ContentTemplate="{DataTemplate v:InscriptionPage}" />
+    <ShellContent Route="Attente" ContentTemplate="{DataTemplate v:AttentePage}" />
+    <ShellContent Route="Tableau" ContentTemplate="{DataTemplate v:TableauPage}" />
+    <ShellContent Route="Planning" ContentTemplate="{DataTemplate v:PlanningPage}" />
+    <ShellContent Route="MonOfficine" ContentTemplate="{DataTemplate v:MonOfficinePage}" />
+    <ShellContent Route="Admin" ContentTemplate="{DataTemplate v:AdminPage}" />
 </Shell>

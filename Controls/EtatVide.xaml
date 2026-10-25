@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="PharmaGarde.Controls.EtatVide"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+    <VerticalStackLayout Spacing="14" Padding="24" VerticalOptions="Center">
+        <!-- pictogramme dans un carré arrondi -->
+        <Border WidthRequest="88" HeightRequest="88" BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}"
+                StrokeShape="RoundRectangle 24" HorizontalOptions="Center">
+            <Label x:Name="LblIcone" Style="{StaticResource Icon}" FontSize="44" />
+        </Border>
+        <!-- titre -->
+        <Label x:Name="LblTitre" Style="{StaticResource H2}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+        <!-- explication -->
+        <Label x:Name="LblMessage" Style="{StaticResource Caption}" FontSize="14" HorizontalTextAlignment="Center" />
+        <!-- bouton (caché s'il n'a pas de texte) -->
+        <c:IconButton x:Name="Bouton" IsVisible="False" Margin="0,8,0,0" Clicked="OnBouton" />
+        <!-- lien (caché s'il n'a pas de texte) -->
+        <Label x:Name="LblLien" IsVisible="False" HorizontalOptions="Center" FontSize="15" TextColor="{StaticResource VertAccent}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnLien" />
+            </Label.GestureRecognizers>
+        </Label>
+    </VerticalStackLayout>
+</ContentView>

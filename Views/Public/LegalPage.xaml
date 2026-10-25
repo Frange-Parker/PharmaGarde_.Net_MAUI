@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.LegalPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="NotAnimated">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+            <!-- lien Retour -->
+            <HorizontalStackLayout Spacing="4">
+                <Label Text="{x:Static h:Icons.ChevronLeft}" Style="{StaticResource Icon}" />
+                <Label Text="Retour" TextColor="{StaticResource VertAccent}" VerticalOptions="Center" />
+                <HorizontalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnRetour" /></HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+
+            <Label Text="Informations légales" Style="{StaticResource H1}" FontSize="24" Margin="0,8,0,0" />
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Source des données" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="Les tours de garde sont déclarés par les pharmaciens inscrits et validés. Une pharmacie qui n'a rien déclaré affiche « Aucune donnée »."
+                           Style="{StaticResource Caption}" FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Fiabilité" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="Chaque information affiche sa date de mise à jour. Appelez toujours la pharmacie avant de vous déplacer la nuit."
+                           Style="{StaticResource Caption}" FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Protection des données" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="Votre position GPS n'est demandée qu'avec votre accord. Elle sert uniquement à calculer les distances sur votre téléphone et n'est jamais transmise."
+                           Style="{StaticResource Caption}" FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Écoconception" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="Thème sombre, icônes vectorielles, aucune image, aucune animation superflue et mémorisation locale pour limiter les échanges réseau."
+                           Style="{StaticResource Caption}" FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Données de démonstration" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource Ambre}" />
+                    <Label Text="Les pharmacies, adresses, téléphones et permanences affichés dans cette version sont FICTIFS et servent uniquement à la démonstration."
+                           Style="{StaticResource Caption}" FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="À propos" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="PharmaGarde v3.0 • Projet réalisé dans un cadre pédagogique (ENSPD)." Style="{StaticResource Caption}" FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

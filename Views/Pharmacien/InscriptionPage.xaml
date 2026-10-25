@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.InscriptionPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+    <ScrollView>
+        <VerticalStackLayout Padding="16,24" Spacing="12">
+
+            <!-- en-tête -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource Vert}" VerticalOptions="Center" />
+                <Label Text="ESPACE PHARMACIEN" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource VertAccent}" CharacterSpacing="1" />
+            </HorizontalStackLayout>
+            <Label Text="Inscription" Style="{StaticResource H1}" HorizontalOptions="Center" />
+            <Label Text="Inscrivez votre officine pour déclarer vos permanences. Votre numéro ONPC sera vérifié."
+                   Style="{StaticResource Caption}" FontSize="14" HorizontalTextAlignment="Center" Margin="0,0,0,8" />
+
+            <c:ChampSaisie x:Name="Nom" Libelle="Nom complet du titulaire" Icone="{x:Static h:Icons.PersonOutline}"
+                           Placeholder="Ex: Dr. Samuel Eto'o" TexteModifie="OnChange" />
+            <c:ChampSaisie x:Name="Email" Libelle="Adresse e-mail" Icone="{x:Static h:Icons.Mail}"
+                           Placeholder="votre.contact@exemple.fr" Clavier="Email" TexteModifie="OnChange" />
+            <c:ChampSaisie x:Name="Mdp" Libelle="Mot de passe" Icone="{x:Static h:Icons.Lock}"
+                           Placeholder="Minimum 8 caractères" EstMotDePasse="True" TexteModifie="OnChange" />
+            <c:ChampSaisie x:Name="Onpc" Libelle="Numéro d'inscription ONPC" Icone="{x:Static h:Icons.VerifiedUser}"
+                           Placeholder="Ex: ONPC-0000" TexteModifie="OnChange" />
+            <c:ChampSaisie x:Name="Officine" Libelle="Nom de l'officine" Icone="{x:Static h:Icons.LocalPharmacy}"
+                           Placeholder="Ex: Pharmacie du Centre" TexteModifie="OnChange" />
+            <c:ChampSaisie x:Name="Adresse" Libelle="Adresse" Icone="{x:Static h:Icons.Pin}"
+                           Placeholder="Rue, quartier" TexteModifie="OnChange" />
+            <c:ChampChoix x:Name="Ville" Libelle="Ville de référence" Icone="{x:Static h:Icons.City}"
+                          Choix="{x:Static h:Config.ChoixVilles}" Valeur="Douala" ValeurChangee="OnChange" />
+            <c:ChampChoix x:Name="Quartier" Libelle="Arrondissement / Quartier" Icone="{x:Static h:Icons.Explore}"
+                          Choix="{x:Static h:Config.ChoixQuartiers}" Placeholder="Sélectionner un quartier" ValeurChangee="OnChange" />
+            <c:ChampSaisie x:Name="Telephone" Libelle="Téléphone de l'officine" Icone="{x:Static h:Icons.Phone}"
+                           Placeholder="+237 6XX XX XX XX" Clavier="Telephone" TexteModifie="OnChange" />
+
+            <!-- position GPS de l'officine -->
+            <c:IconButton Text="Utiliser ma position" Icon="{x:Static h:Icons.GpsFixed}" Variant="Secondary" Clicked="OnPosition" />
+            <Label x:Name="LblGps" Text="Facultatif : sans position, le centre du quartier est utilisé." Style="{StaticResource Caption}" />
+
+            <!-- certification -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" Margin="0,8,0,0">
+                <CheckBox x:Name="CaseCertifie" CheckedChanged="OnCertifie" VerticalOptions="Start" />
+                <Label Grid.Column="1" Text="Je certifie être le pharmacien responsable de cette officine." VerticalOptions="Center" />
+            </Grid>
+            <Label x:Name="ErrCertifie" Text="Cette certification est obligatoire" TextColor="{StaticResource Erreur}" FontSize="13" IsVisible="False" />
+
+            <c:IconButton x:Name="BtnInscrire" Text="S'inscrire" Icon="{x:Static h:Icons.PersonAdd}" Margin="0,12,0,0" Clicked="OnInscrire" />
+
+            <Label HorizontalOptions="Center" Margin="0,8,0,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Déjà inscrit ? " />
+                        <Span Text="Se connecter" TextColor="{StaticResource VertAccent}" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnSeConnecter" /></Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

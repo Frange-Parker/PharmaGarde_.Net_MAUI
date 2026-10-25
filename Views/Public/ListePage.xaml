@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.ListePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+
+    <!-- 3 lignes : en-tête / contenu / barre du bas. Le panneau de filtres couvre tout. -->
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- ===== LIGNE 0 : EN-TÊTE ===== -->
+        <VerticalStackLayout Grid.Row="0" Padding="16,16,16,8" Spacing="12">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Pharmacies de garde" Style="{StaticResource H2}" FontSize="24" />
+                <Label x:Name="LblSousTitre" Text="Douala" Style="{StaticResource Caption}" FontSize="14" />
+            </VerticalStackLayout>
+
+            <!-- bascule Vue Liste / Vue Carte -->
+            <Border Style="{StaticResource Card}" Padding="4">
+                <Grid ColumnDefinitions="*,*">
+                    <Border BackgroundColor="{StaticResource Surface}" StrokeShape="RoundRectangle 12" Padding="10">
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <Label Text="{x:Static h:Icons.List}" Style="{StaticResource Icon}" FontSize="18" />
+                            <Label Text="Vue Liste" FontAttributes="Bold" TextColor="{StaticResource VertAccent}" />
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" BackgroundColor="Transparent" Stroke="Transparent" Padding="10">
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <Label Text="{x:Static h:Icons.Map}" Style="{StaticResource Icon}" FontSize="18" TextColor="{StaticResource TexteSec}" />
+                            <Label Text="Vue Carte" TextColor="{StaticResource TexteSec}" />
+                        </HorizontalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnVueCarte" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- puces : De garde / Toutes / Filtrer -->
+            <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                <Border x:Name="ChipGarde" BackgroundColor="{StaticResource Vert}" Stroke="Transparent" StrokeShape="RoundRectangle 16" Padding="14,8">
+                    <Label x:Name="TxtGarde" Text="De garde" FontAttributes="Bold" TextColor="{StaticResource SurTexteVert}" />
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipGarde" /></Border.GestureRecognizers>
+                </Border>
+                <Border x:Name="ChipToutes" BackgroundColor="{StaticResource Surface}" Stroke="Transparent" StrokeShape="RoundRectangle 16" Padding="14,8">
+                    <Label x:Name="TxtToutes" Text="Toutes" />
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipToutes" /></Border.GestureRecognizers>
+                </Border>
+                <Border BackgroundColor="{StaticResource Surface}" Stroke="Transparent" StrokeShape="RoundRectangle 16" Padding="14,8">
+                    <Label Text="Filtrer ?" />
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnFiltrer" /></Border.GestureRecognizers>
+                </Border>
+            </HorizontalStackLayout>
+
+            <!-- bandeau : mode hors ligne ou historique -->
+            <Border x:Name="BandeauInfo" IsVisible="False" BackgroundColor="{StaticResource ErreurFond}" Stroke="{StaticResource Erreur}"
+                    StrokeShape="RoundRectangle 12" Padding="12,8">
+                <Label x:Name="TxtBandeau" FontSize="13" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- ===== LIGNE 1 : CONTENU (les 3 variantes sont superposées, une seule est visible) ===== -->
+        <Grid Grid.Row="1">
+
+            <!-- liste normale -->
+            <ScrollView x:Name="Contenu">
+                <VerticalStackLayout Padding="16,4,16,16" Spacing="16">
+
+                    <!-- bandeau protocole de nuit -->
+                    <Border Style="{StaticResource Card}" Padding="12">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border BackgroundColor="#16222B" StrokeShape="RoundRectangle 10" Stroke="Transparent" WidthRequest="44" HeightRequest="44">
+                                <Label Text="{x:Static h:Icons.Moon}" Style="{StaticResource Icon}" TextColor="{StaticResource Bleu}" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="Protocole de nuit actif" FontAttributes="Bold" />
+                                <Label Text="Munissez-vous de votre ordonnance si possible" Style="{StaticResource Caption}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- les cartes : une par pharmacie -->
+                    <VerticalStackLayout x:Name="ListeCartes" Spacing="16">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <c:CartePharmacie />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <!-- état vide : aucun résultat -->
+                    <VerticalStackLayout x:Name="ZoneVide" IsVisible="False" Spacing="12">
+                        <c:EtatVide x:Name="Vide" Icone="{x:Static h:Icons.Search}" BoutonClique="OnReinitialiser" />
+                        <Label Text="Services d'urgence nationaux" FontAttributes="Bold" Margin="4,6,0,0" />
+                        <c:LigneUrgence Numero="119" Libelle="SAMU" />
+                        <c:LigneUrgence Numero="117" Libelle="POLICE" />
+                        <c:LigneUrgence Numero="118" Libelle="POMPIERS" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- squelette de chargement (rempli par le code) -->
+            <ScrollView x:Name="ZoneSquelette" IsVisible="False">
+                <VerticalStackLayout x:Name="Squelette" Padding="16,4,16,16" Spacing="16" />
+            </ScrollView>
+
+            <!-- état d'erreur -->
+            <c:EtatVide x:Name="Erreur" IsVisible="False" Icone="{x:Static h:Icons.CloudOff}" Titre="Impossible de charger les gardes"
+                        TexteBouton="Réessayer" IconeBouton="{x:Static h:Icons.Refresh}" VarianteBouton="Secondary"
+                        BoutonClique="OnReessayer" LienClique="OnDonneesHorsLigne" />
+        </Grid>
+
+        <!-- ===== LIGNE 2 : barre du bas ===== -->
+        <c:BarreNav Grid.Row="2" Mode="Public" Actif="Liste" />
+
+        <!-- ===== COUCHE DES FILTRES : dernier élément = au-dessus de tout ===== -->
+        <c:PanneauFiltres x:Name="Panneau" Grid.Row="0" Grid.RowSpan="3" Appliquer="OnFiltresAppliques" />
+    </Grid>
+</ContentPage>

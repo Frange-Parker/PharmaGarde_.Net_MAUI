@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.SplashPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers">
+    <!-- tout est centré au milieu de l'écran -->
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="14">
+        <!-- carré du logo (plat, sans halo) -->
+        <Border WidthRequest="110" HeightRequest="110" BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}"
+                StrokeShape="RoundRectangle 28" Margin="0,0,0,12">
+            <Label Text="{x:Static h:Icons.Add}" Style="{StaticResource Icon}" FontSize="64" TextColor="{StaticResource Vert}" />
+        </Border>
+        <Label Text="PharmaGarde" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+        <Label Text="Pharmacies de garde en temps réel" Style="{StaticResource Caption}" FontSize="15" HorizontalOptions="Center" />
+        <!-- barre de progression fixe (pas d'animation) -->
+        <ProgressBar Progress="0.62" ProgressColor="{StaticResource Vert}" WidthRequest="180" />
+        <Label Text="Actualisation des tours de garde..." Style="{StaticResource Caption}" HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

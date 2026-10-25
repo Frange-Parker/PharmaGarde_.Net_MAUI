@@ -2,13 +2,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- fond sombre pour toutes les pages -->
+    <!-- fond des pages : DynamicResource pour que le mode OLED change la couleur en direct -->
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
-        <Setter Property="BackgroundColor" Value="{StaticResource Fond}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Fond}" />
     </Style>
 
     <!-- ===== TYPOGRAPHIE ===== -->
-    <Style TargetType="Label"> <!-- style par défaut -->
+    <Style TargetType="Label"> <!-- texte par défaut -->
         <Setter Property="TextColor" Value="{StaticResource Texte}" />
         <Setter Property="FontSize" Value="14" />
     </Style>
@@ -22,11 +22,11 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontAttributes" Value="Bold" />
     </Style>
-    <Style x:Key="Caption" TargetType="Label"> <!-- petit texte secondaire -->
+    <Style x:Key="Caption" TargetType="Label"> <!-- légende -->
         <Setter Property="TextColor" Value="{StaticResource TexteSec}" />
         <Setter Property="FontSize" Value="12" />
     </Style>
-    <Style x:Key="Rubrique" TargetType="Label"> <!-- intitulé de rubrique en majuscules -->
+    <Style x:Key="Rubrique" TargetType="Label"> <!-- intitulé de rubrique -->
         <Setter Property="TextColor" Value="{StaticResource TexteSec}" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontAttributes" Value="Bold" />
@@ -41,7 +41,7 @@
     </Style>
 
     <!-- ===== CONTENEURS ===== -->
-    <Style x:Key="Card" TargetType="Border"> <!-- carte arrondie (16) -->
+    <Style x:Key="Card" TargetType="Border"> <!-- carte arrondie -->
         <Setter Property="BackgroundColor" Value="{StaticResource Carte}" />
         <Setter Property="Stroke" Value="{StaticResource Bordure}" />
         <Setter Property="StrokeThickness" Value="1" />
@@ -62,9 +62,9 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 12" />
         <Setter Property="Padding" Value="12" />
     </Style>
-    <Style x:Key="Badge" TargetType="Border"> <!-- pastille verte "Ouvert" -->
+    <Style x:Key="Badge" TargetType="Border"> <!-- pastille de statut -->
         <Setter Property="BackgroundColor" Value="{StaticResource VertFond}" />
-        <Setter Property="Stroke" Value="#1F6B3A" />
+        <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeShape" Value="RoundRectangle 12" />
         <Setter Property="Padding" Value="10,4" />
         <Setter Property="VerticalOptions" Value="Center" />
@@ -81,13 +81,6 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 8" />
         <Setter Property="HeightRequest" Value="16" />
     </Style>
-    <Style x:Key="Pin" TargetType="Border"> <!-- marqueur de pharmacie sur la carte -->
-        <Setter Property="BackgroundColor" Value="{StaticResource Vert}" />
-        <Setter Property="Stroke" Value="Transparent" />
-        <Setter Property="StrokeShape" Value="Ellipse" />
-        <Setter Property="WidthRequest" Value="34" />
-        <Setter Property="HeightRequest" Value="34" />
-    </Style>
     <Style x:Key="Rond" TargetType="Border"> <!-- bouton rond (carte, partage...) -->
         <Setter Property="BackgroundColor" Value="{StaticResource Carte}" />
         <Setter Property="Stroke" Value="{StaticResource Bordure}" />
@@ -97,20 +90,23 @@
     </Style>
 
     <!-- ===== CONTRÔLES DE SAISIE ===== -->
-        <Style TargetType="Entry">
+    <Style TargetType="Entry">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{StaticResource Texte}" />
         <Setter Property="PlaceholderColor" Value="{StaticResource TexteOff}" />
         <Setter Property="FontSize" Value="15" />
-        <!-- le texte reste centré dans la hauteur du champ -->
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
     </Style>
-    <Style TargetType="Picker">
-        <Setter Property="BackgroundColor" Value="Transparent" />
+    <Style TargetType="DatePicker">
         <Setter Property="TextColor" Value="{StaticResource Texte}" />
-        <Setter Property="TitleColor" Value="{StaticResource TexteOff}" />
         <Setter Property="FontSize" Value="15" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+    <Style TargetType="TimePicker">
+        <Setter Property="TextColor" Value="{StaticResource Texte}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="VerticalOptions" Value="Center" />
     </Style>
     <Style TargetType="Switch">
         <Setter Property="OnColor" Value="{StaticResource Vert}" />

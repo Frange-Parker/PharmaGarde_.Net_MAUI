@@ -1,28 +1,45 @@
-﻿using Microsoft.Maui.Handlers; // nécessaire pour personnaliser les contrôles natifs
+﻿using Microsoft.Maui.Handlers; // pour personnaliser les contrôles natifs
 
-namespace PharmaGarde;
+namespace PharmaGarde; // espace de noms du projet
 
-public static class MauiProgram
+public static class MauiProgram // classe de démarrage
 {
-    public static MauiApp CreateMauiApp()
+    public static MauiApp CreateMauiApp() // construit l'application
     {
-        var builder = MauiApp.CreateBuilder(); // crée le constructeur d'application
+        var builder = MauiApp.CreateBuilder(); // crée le constructeur
         builder
             .UseMauiApp<App>() // classe racine
-            .ConfigureFonts(fonts =>
+            .ConfigureFonts(fonts => // déclare les polices
             {
-                fonts.AddFont("MaterialIcons-Regular.ttf", "Icons"); // police d'icônes
+                fonts.AddFont("MaterialIcons-Regular.ttf", "Icons"); // police d'icônes, alias "Icons"
             });
 
-        // Supprime le cadre natif Android des champs et centre le texte verticalement
+        // Champs de saisie : retire le cadre natif Android et centre le texte verticalement
         EntryHandler.Mapper.AppendToMapping("SansCadre", (handler, vue) =>
         {
 #if ANDROID
-            handler.PlatformView.Background = null;      // retire le fond et le trait natifs
-            handler.PlatformView.SetPadding(0, 0, 0, 0); // retire le décalage interne
-            // garde l'alignement horizontal d'origine, force le centrage vertical
-            var horizontal = handler.PlatformView.Gravity & Android.Views.GravityFlags.HorizontalGravityMask;
-            handler.PlatformView.Gravity = horizontal | Android.Views.GravityFlags.CenterVertical;
+            handler.PlatformView.Background = null;      // supprime le fond et le trait natifs
+            handler.PlatformView.SetPadding(0, 0, 0, 0); // supprime le décalage interne
+            var horizontal = handler.PlatformView.Gravity & Android.Views.GravityFlags.HorizontalGravityMask; // garde l'alignement horizontal
+            handler.PlatformView.Gravity = horizontal | Android.Views.GravityFlags.CenterVertical; // centre verticalement
+#endif
+        });
+
+        // Sélecteur de date : même traitement
+        DatePickerHandler.Mapper.AppendToMapping("SansCadre", (handler, vue) =>
+        {
+#if ANDROID
+            handler.PlatformView.Background = null;      // supprime le cadre natif
+            handler.PlatformView.SetPadding(0, 0, 0, 0); // supprime le décalage
+#endif
+        });
+
+        // Sélecteur d'heure : même traitement
+        TimePickerHandler.Mapper.AppendToMapping("SansCadre", (handler, vue) =>
+        {
+#if ANDROID
+            handler.PlatformView.Background = null;      // supprime le cadre natif
+            handler.PlatformView.SetPadding(0, 0, 0, 0); // supprime le décalage
 #endif
         });
 

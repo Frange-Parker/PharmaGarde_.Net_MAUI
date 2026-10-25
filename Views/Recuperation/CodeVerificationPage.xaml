@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.CodeVerificationPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="NotAnimated">
+    <ScrollView>
+        <VerticalStackLayout Padding="24,16" Spacing="10">
+            <HorizontalStackLayout Spacing="4">
+                <Label Text="{x:Static h:Icons.ChevronLeft}" Style="{StaticResource Icon}" />
+                <Label Text="Retour" TextColor="{StaticResource VertAccent}" VerticalOptions="Center" />
+                <HorizontalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnRetour" /></HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+
+            <Border WidthRequest="88" HeightRequest="88" BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}"
+                    StrokeShape="RoundRectangle 24" HorizontalOptions="Center" Margin="0,32,0,16">
+                <Label Text="{x:Static h:Icons.MarkEmailRead}" Style="{StaticResource Icon}" FontSize="44" />
+            </Border>
+            <Label Text="Vérification" Style="{StaticResource H1}" HorizontalOptions="Center" />
+            <Label Text="Entrez le code à 6 chiffres envoyé à votre adresse e-mail."
+                   Style="{StaticResource Caption}" FontSize="14" HorizontalTextAlignment="Center" Margin="0,0,0,20" />
+
+            <c:ChampSaisie x:Name="Code" Libelle="Code de vérification" Icone="{x:Static h:Icons.Key}" Placeholder="------"
+                           Clavier="Numeric" LongueurMax="6" TexteModifie="OnChange" />
+            <c:IconButton x:Name="BtnValider" Text="Valider le code" Icon="{x:Static h:Icons.Check}" Margin="0,12,0,0" Clicked="OnValider" />
+
+            <Label HorizontalOptions="Center" Margin="0,16,0,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Code non reçu ? " />
+                        <Span Text="Renvoyer le code" TextColor="{StaticResource VertAccent}" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnRenvoyer" /></Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.AttentePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+    <VerticalStackLayout VerticalOptions="Center" Padding="24" Spacing="14">
+        <!-- pictogramme -->
+        <Border WidthRequest="88" HeightRequest="88" BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}"
+                StrokeShape="RoundRectangle 24" HorizontalOptions="Center">
+            <Label Text="{x:Static h:Icons.Hourglass}" Style="{StaticResource Icon}" FontSize="44" TextColor="{StaticResource Ambre}" />
+        </Border>
+        <Label Text="Inscription reçue" Style="{StaticResource H1}" HorizontalOptions="Center" />
+        <Label Text="Nous vérifions votre numéro ONPC. Vous serez averti dès la validation de votre compte."
+               Style="{StaticResource Caption}" FontSize="14" HorizontalTextAlignment="Center" />
+
+        <c:IconButton Text="Retour à la recherche" Icon="{x:Static h:Icons.Search}" Margin="0,12,0,0" Clicked="OnRetourRecherche" />
+        <!-- outil de démonstration : remplace la validation de l'administrateur -->
+        <c:IconButton x:Name="BtnDemo" Text="Simuler la validation (démo)" Icon="{x:Static h:Icons.VerifiedUser}" Variant="Secondary" IsVisible="False" Clicked="OnSimuler" />
+        <Label Text="Se déconnecter" HorizontalOptions="Center" TextColor="{StaticResource Erreur}" FontAttributes="Bold" Margin="0,8,0,0">
+            <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnDeconnexion" /></Label.GestureRecognizers>
+        </Label>
+    </VerticalStackLayout>
+</ContentPage>

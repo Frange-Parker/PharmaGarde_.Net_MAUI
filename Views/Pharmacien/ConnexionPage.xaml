@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.ConnexionPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" VerticalOptions="Center" Spacing="12">
+
+            <!-- pictogramme -->
+            <Border WidthRequest="72" HeightRequest="72" BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}"
+                    StrokeShape="RoundRectangle 20" HorizontalOptions="Center">
+                <Label Text="{x:Static h:Icons.LocalPharmacy}" Style="{StaticResource Icon}" FontSize="36" />
+            </Border>
+            <Label Text="Connexion pharmacien" Style="{StaticResource H1}" FontSize="26" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <Label Text="Déclarez les permanences de votre officine pour guider les patients."
+                   Style="{StaticResource Caption}" FontSize="14" HorizontalTextAlignment="Center" Margin="0,0,0,12" />
+
+            <!-- champs liés au ViewModel -->
+            <c:ChampSaisie Libelle="Adresse email" Icone="{x:Static h:Icons.Mail}" Placeholder="nom@exemple.fr" Clavier="Email"
+                           Texte="{Binding Email, Mode=TwoWay}" EnErreur="{Binding EmailEnErreur, Mode=TwoWay}" />
+            <c:ChampSaisie Libelle="Mot de passe" Icone="{x:Static h:Icons.Lock}" Placeholder="Votre mot de passe" EstMotDePasse="True"
+                           Texte="{Binding MotDePasse, Mode=TwoWay}" MessageErreur="{Binding ErreurMotDePasse, Mode=TwoWay}" />
+
+            <!-- lien mot de passe oublié -->
+            <Label Text="Mot de passe oublié ?" HorizontalOptions="End" FontSize="13" TextColor="{StaticResource VertAccent}">
+                <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding MdpOublieCommand}" /></Label.GestureRecognizers>
+            </Label>
+
+            <!-- bouton principal -->
+            <c:IconButton Text="Se connecter" Icon="{x:Static h:Icons.Login}" Margin="0,8,0,0"
+                          Command="{Binding ConnecterCommand}" IsEnabled="{Binding BoutonActif}" />
+
+            <!-- identifiants de démonstration -->
+            <Label Text="Démonstration : demo@pharmagarde.cm / Pharma2026" Style="{StaticResource Caption}"
+                   HorizontalOptions="Center" IsVisible="{Binding DemoVisible}" />
+
+            <!-- séparateur "OU" -->
+            <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="12" Margin="0,8">
+                <BoxView HeightRequest="1" Color="{StaticResource Bordure}" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="OU" Style="{StaticResource Caption}" />
+                <BoxView Grid.Column="2" HeightRequest="1" Color="{StaticResource Bordure}" VerticalOptions="Center" />
+            </Grid>
+
+            <!-- retour à la recherche -->
+            <Border BackgroundColor="{StaticResource Carte}" Stroke="{StaticResource Bordure}" StrokeShape="RoundRectangle 12" Padding="12" HeightRequest="56">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="12">
+                    <Label Text="{x:Static h:Icons.Search}" Style="{StaticResource Icon}" />
+                    <Label Text="Retour à la recherche" VerticalOptions="Center" FontAttributes="Bold" />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding RetourRechercheCommand}" /></Border.GestureRecognizers>
+            </Border>
+
+            <!-- lien inscription -->
+            <Label HorizontalOptions="Center" Margin="0,12,0,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Pas encore inscrit ? " />
+                        <Span Text="Inscrire mon officine" TextColor="{StaticResource VertAccent}" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding InscriptionCommand}" /></Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

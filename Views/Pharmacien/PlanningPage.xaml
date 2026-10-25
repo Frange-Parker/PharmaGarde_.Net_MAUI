@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.PlanningPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- ===== EN-TÊTE ===== -->
+        <VerticalStackLayout Grid.Row="0" Padding="16,16,16,8" Spacing="12">
+            <Label Text="Planning" Style="{StaticResource H2}" FontSize="24" />
+            <c:IconButton x:Name="BtnAjouter" Text="Déclarer une permanence" Icon="{x:Static h:Icons.AddCircle}" Clicked="OnAjouter" />
+            <!-- puces À venir / Passées -->
+            <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                <Border x:Name="ChipAvenir" BackgroundColor="{StaticResource Vert}" Stroke="Transparent" StrokeShape="RoundRectangle 16" Padding="14,8">
+                    <Label x:Name="TxtAvenir" Text="À venir" FontAttributes="Bold" TextColor="{StaticResource SurTexteVert}" />
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipAvenir" /></Border.GestureRecognizers>
+                </Border>
+                <Border x:Name="ChipPassees" BackgroundColor="{StaticResource Surface}" Stroke="Transparent" StrokeShape="RoundRectangle 16" Padding="14,8">
+                    <Label x:Name="TxtPassees" Text="Passées" />
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipPassees" /></Border.GestureRecognizers>
+                </Border>
+            </HorizontalStackLayout>
+            <!-- bandeau hors ligne -->
+            <Border x:Name="BandeauHL" IsVisible="False" BackgroundColor="{StaticResource ErreurFond}" Stroke="{StaticResource Erreur}"
+                    StrokeShape="RoundRectangle 12" Padding="12,8">
+                <Label Text="● Hors ligne : lecture seule" FontSize="13" TextColor="{StaticResource Erreur}" HorizontalOptions="Center" />
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- ===== CONTENU (3 variantes superposées) ===== -->
+        <Grid Grid.Row="1">
+            <ScrollView x:Name="Contenu">
+                <VerticalStackLayout Padding="16,4,16,16" Spacing="14">
+                    <VerticalStackLayout x:Name="ListeCartes" Spacing="14" />
+                    <c:EtatVide x:Name="Vide" IsVisible="False" Icone="{x:Static h:Icons.EventNote}" Titre="Aucune permanence déclarée"
+                                Message="Déclarez vos gardes pour que les patients puissent vous trouver."
+                                TexteBouton="Déclarer une permanence" IconeBouton="{x:Static h:Icons.AddCircle}" BoutonClique="OnAjouter" />
+                </VerticalStackLayout>
+            </ScrollView>
+            <ScrollView x:Name="ZoneSquelette" IsVisible="False">
+                <VerticalStackLayout x:Name="Squelette" Padding="16,4,16,16" Spacing="14" />
+            </ScrollView>
+            <c:EtatVide x:Name="Erreur" IsVisible="False" Icone="{x:Static h:Icons.CloudOff}" Titre="Impossible de charger le planning"
+                        Message="Vérifier votre connexion internet puis réessayer." TexteBouton="Réessayer"
+                        IconeBouton="{x:Static h:Icons.Refresh}" VarianteBouton="Secondary" BoutonClique="OnReessayer" />
+        </Grid>
+
+        <c:BarreNav Grid.Row="2" Mode="Pharmacien" Actif="Planning" />
+    </Grid>
+</ContentPage>

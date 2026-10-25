@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="PharmaGarde.Views.PermanencePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:PharmaGarde.Helpers"
+             xmlns:c="clr-namespace:PharmaGarde.Controls"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="NotAnimated">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <!-- lien Retour -->
+            <HorizontalStackLayout Spacing="4">
+                <Label Text="{x:Static h:Icons.ChevronLeft}" Style="{StaticResource Icon}" />
+                <Label Text="Retour" TextColor="{StaticResource VertAccent}" VerticalOptions="Center" />
+                <HorizontalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnRetour" /></HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+
+            <Label x:Name="LblTitre" Text="Nouvelle permanence" Style="{StaticResource H1}" FontSize="24" Margin="0,8,0,8" />
+
+            <!-- type -->
+            <c:ChampChoix x:Name="Type" Libelle="Type de permanence" Icone="{x:Static h:Icons.Moon}"
+                          Choix="Nuit|Week-end|Jour férié|24h/24" Valeur="Nuit" ValeurChangee="OnTypeChange" />
+
+            <!-- début -->
+            <Label Text="Début" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Border Style="{StaticResource Field}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Label Text="{x:Static h:Icons.Calendar}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                        <DatePicker x:Name="DateDebut" Grid.Column="1" Format="dd/MM/yyyy" DateSelected="OnDateChange" />
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource Field}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Label Text="{x:Static h:Icons.Clock}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                        <TimePicker x:Name="HeureDebut" Grid.Column="1" Format="HH:mm" PropertyChanged="OnHeureChange" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- fin -->
+            <Label Text="Fin" Margin="0,4,0,0" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Border Style="{StaticResource Field}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Label Text="{x:Static h:Icons.Calendar}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                        <DatePicker x:Name="DateFin" Grid.Column="1" Format="dd/MM/yyyy" DateSelected="OnDateChange" />
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource Field}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Label Text="{x:Static h:Icons.Clock}" Style="{StaticResource Icon}" TextColor="{StaticResource TexteSec}" />
+                        <TimePicker x:Name="HeureFin" Grid.Column="1" Format="HH:mm" PropertyChanged="OnHeureChange" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- note d'accès et pharmacien de permanence -->
+            <c:ChampSaisie x:Name="Note" Libelle="Note d'accès" Icone="{x:Static h:Icons.Info}"
+                           Placeholder="Ex: Interphone &amp; sonnette sécurisée" TexteModifie="OnChange" />
+            <c:ChampSaisie x:Name="Equipe" Libelle="Pharmacien de permanence" Icone="{x:Static h:Icons.PersonOutline}"
+                           Placeholder="Ex: Dr E. Ngando" TexteModifie="OnChange" />
+
+            <!-- erreur générale -->
+            <Border x:Name="BlocErreur" IsVisible="False" BackgroundColor="{StaticResource ErreurFond}" Stroke="{StaticResource Erreur}"
+                    StrokeShape="RoundRectangle 12" Padding="12">
+                <Label x:Name="LblErreur" TextColor="{StaticResource Erreur}" />
+            </Border>
+
+            <c:IconButton x:Name="BtnEnregistrer" Text="Enregistrer" Icon="{x:Static h:Icons.Check}" Margin="0,8,0,0" Clicked="OnEnregistrer" />
+            <c:IconButton Text="Annuler" Variant="Secondary" Clicked="OnAnnuler" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
