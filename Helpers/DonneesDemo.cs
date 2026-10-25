@@ -14,23 +14,23 @@ public static class DonneesDemo
         // ----- 5 pharmacies -----
         b.Pharmacies.Add(new Pharmacie { Id = 1, Nom = "Pharmacie du Centre", Quartier = "Akwa",
             Adresse = "Boulevard de la Liberté, Akwa, Douala", Repere = "Face Ancien Cinéma Le Wouri",
-            Latitude = 4.0533, Longitude = 9.7110, Telephone = "+237699000001",
+            Latitude = 4.0533, Longitude = 9.7110, Telephone = "+23700000000",
             Tdr = true, MobileMoney = true, Oxygene = true, Perfusion = true, SerumAntitetanique = true, Source = "Démonstration" });
         b.Pharmacies.Add(new Pharmacie { Id = 2, Nom = "Pharmacie des Cocotiers", Quartier = "Bonanjo",
             Adresse = "Avenue Charles de Gaulle, Bonanjo, Douala", Repere = "Près de la Place du Gouvernement",
-            Latitude = 4.0470, Longitude = 9.6990, Telephone = "+237699000002", HorairesOuverture = "24h/24",
+            Latitude = 4.0470, Longitude = 9.6990, Telephone = "+23700000000", HorairesOuverture = "24h/24",
             Tdr = true, MobileMoney = true, Perfusion = true, Source = "Démonstration" });
         b.Pharmacies.Add(new Pharmacie { Id = 3, Nom = "Pharmacie de la Liberté", Quartier = "Bonapriso",
             Adresse = "Rue Joss, Bonapriso, Douala", Repere = "Angle Rue Joss",
-            Latitude = 4.0610, Longitude = 9.6960, Telephone = "+237699000003",
+            Latitude = 4.0610, Longitude = 9.6960, Telephone = "+23700000000",
             Tdr = true, Source = "Démonstration" });
         b.Pharmacies.Add(new Pharmacie { Id = 4, Nom = "Pharmacie de Deïdo", Quartier = "Deïdo",
             Adresse = "Rue Manga Bell, Deïdo, Douala", Repere = "Près du marché de Deïdo",
-            Latitude = 4.0690, Longitude = 9.7220, Telephone = "+237699000004",
+            Latitude = 4.0690, Longitude = 9.7220, Telephone = "+23700000000",
             Tdr = true, MobileMoney = true, Oxygene = true, SerumAntitetanique = true, Source = "Démonstration" });
         b.Pharmacies.Add(new Pharmacie { Id = 5, Nom = "Pharmacie de Bépanda", Quartier = "Bépanda",
             Adresse = "Carrefour Bépanda, Douala", Repere = "Près du carrefour",
-            Latitude = 4.0750, Longitude = 9.7330, Telephone = "+237699000005",
+            Latitude = 4.0750, Longitude = 9.7330, Telephone = "+23700000000",
             Tdr = true, Source = "Démonstration" }); // non inscrite : aucune donnée
 
         // ----- comptes pharmaciens des 4 premières (mot de passe : Pharma2026) -----
